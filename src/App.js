@@ -7,6 +7,7 @@ import { useState, useRef } from 'react';
 function App() {
   const idRef = useRef(0);
   const [todo, setTodo] = useState([]);
+  // Todo 생성
   const onCreate = (content) => {
     const newItem = {
       id: idRef.current,
@@ -17,7 +18,7 @@ function App() {
     setTodo([newItem, ...todo]);
     idRef.current += 1;
   }
-
+  //Todo 체크박스 업데이트
   const onUpdate = (targetId) => {
     setTodo(
       todo.map((it) => {
@@ -32,12 +33,16 @@ function App() {
       })
     );
   };
+  //Todo 삭제
+  const onDelete = (targetId) => {
+    setTodo(todo.filter((it) => it.id !== targetId));
+  };
 
   return (
     <div className='App'>
       <Header />
       <TodoEditor onCreate={onCreate} />
-      <TodoList todo={todo} onUpdate={onUpdate} />
+      <TodoList todo={todo} onUpdate={onUpdate} onDelete={onDelete} />
     </div>
   );
 }
